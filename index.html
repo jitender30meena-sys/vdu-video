@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#090b10" />
   <meta name="description" content="VDU — a stylish, free video discovery experience." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./vdu-icon-192.png" type="image/png" />
+  <link rel="apple-touch-icon" href="./vdu-icon-192.png" />
   <title>VDU — Video, discovered differently</title>
   <link rel="preconnect" href="https://inv.nadeko.net" />
   <link rel="preconnect" href="https://i.ytimg.com" />
@@ -25,6 +30,22 @@
     @media(max-width:1150px){.video-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.brand{min-width:150px}.layout{grid-template-columns:190px minmax(0,1fr)}main{padding:25px 25px 60px}.sidebar{padding-left:17px}}
     @media(max-width:760px){.topbar{height:65px;padding:0 14px;gap:10px}.brand{min-width:0;gap:7px}.brand-mark{width:34px;height:34px;border-radius:11px;font-size:15px}.brand-name{font-size:20px}.brand-tag{display:none}.search-wrap{height:40px}.search-wrap input{padding:0 10px;font-size:12px}.search-btn{width:42px}.top-actions{gap:6px}.top-actions .icon-btn{width:36px;height:36px}.profile-chip{padding:4px;border-radius:12px}.profile-chip span:last-child{display:none}.layout{display:block}.sidebar{display:none}.mobile-nav{display:flex;position:fixed;z-index:19;bottom:0;left:0;right:0;background:rgba(12,16,23,.96);border-top:1px solid #29323f;backdrop-filter:blur(16px);justify-content:space-around;padding:7px 4px max(7px,env(safe-area-inset-bottom))}.mobile-nav .nav-item{display:flex;flex-direction:column;gap:3px;padding:6px 9px;margin:0;font-size:9px;border:0}.mobile-nav .nav-icon{font-size:17px}.mobile-nav .nav-item.active{background:transparent}main{padding:17px 14px 95px}.hero{min-height:190px;padding:25px 22px;border-radius:19px}.hero h1{font-size:29px}.hero p{max-width:280px;font-size:11px}.hero:after{right:6%;font-size:72px}.hero:before{right:-25%;}.video-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:19px 10px}.thumb-wrap{border-radius:11px}.video-info{gap:7px;padding-top:8px}.channel-avatar{width:28px;height:28px;font-size:10px}.video-title{font-size:11px}.channel-name{font-size:9px;margin-top:4px}.video-meta{font-size:9px}.section-head h2{font-size:18px}.section-head{align-items:center}.section-actions .select{max-width:115px;padding:7px 6px;font-size:10px}.footer{margin-top:35px}.player-details h2{font-size:15px}.modal-backdrop{padding:10px}.modal{border-radius:15px}.player-area{aspect-ratio:16/9}.form-modal{padding:19px}}
     @media(max-width:390px){.brand-name{font-size:18px}.topbar{gap:7px}.video-grid{gap:16px 8px}.hero h1{font-size:25px}.hero p{max-width:235px}.hero-actions{margin-top:14px}.primary-btn,.secondary-btn{padding:9px 11px;font-size:10px}}
+
+    .modal:fullscreen{width:100vw;height:100vh;max-height:100vh;border-radius:0;display:flex;flex-direction:column}.modal:fullscreen .player-area{max-height:none;flex:1;aspect-ratio:auto;min-height:0}.modal:fullscreen .player-details{flex:none}
+    .tool-section{border:1px solid #2b3542;background:#121923;border-radius:13px;padding:13px;margin:12px 0}
+    .tool-section h3{font-family:'Space Grotesk';font-size:13px;margin:0 0 7px;color:#eef3f8}
+    .tool-section p{font-size:11px;line-height:1.55;color:#9aa6b5;margin:0 0 9px}
+    .tool-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .tool-value{font-size:12px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+    .tool-note{font-size:10px;color:#778494;line-height:1.5;margin-top:7px}
+    .tool-select{background:#0c1118;color:#e6ebf2;border:1px solid #354253;border-radius:9px;padding:8px 10px;font-size:11px;min-width:125px}
+    .tool-status{font-size:11px;color:#aeb9c7;margin-top:7px;overflow-wrap:anywhere}
+    .player-actions{flex-wrap:wrap}
+    .player-actions .small-btn{min-height:36px}
+    .mini-pill{display:inline-flex;align-items:center;gap:6px;background:#1b252f;color:#aeb9c7;border:1px solid #303d4b;border-radius:20px;padding:5px 9px;font-size:10px}
+    .privacy-banner{border:1px solid rgba(182,243,107,.18);background:rgba(182,243,107,.055);color:#bdc8b3;padding:10px 12px;border-radius:10px;font-size:11px;line-height:1.5}
+    @media(max-width:760px){.form-modal{max-height:88vh;overflow:auto}.tool-section{padding:11px}.player-actions{gap:6px}.player-actions .small-btn{font-size:10px;padding:8px 9px}}
+
   </style>
 </head>
 <body>
@@ -39,7 +60,7 @@
     </form>
     <div class="top-actions">
       <button class="icon-btn" id="settingsBtn" title="Settings" aria-label="Settings">⚙</button>
-      <button class="icon-btn" id="locationBtn" title="Set my location" aria-label="Set my location">⌖</button>
+      <button class="icon-btn" id="locationBtn" title="Start or stop live location" aria-label="Start or stop live location">⌖</button>
       <button class="profile-chip" id="profileBtn" title="Edit profile"><span class="avatar" id="avatarLetter">G</span><span id="profileName">Guest</span></button>
     </div>
   </header>
@@ -101,16 +122,73 @@
     <div class="modal">
       <div class="modal-head"><strong>Now playing on <span style="color:var(--accent)">VDU</span></strong><button class="close-btn" data-close="playerModal" aria-label="Close">×</button></div>
       <div class="player-area"><div id="yt-player"></div></div>
-      <div class="player-details"><h2 id="playerTitle">Video title</h2><p id="playerMeta">YouTube video</p><div class="player-actions"><button class="small-btn" id="playPauseBtn">Ⅱ Pause</button><button class="small-btn" id="copyVideoBtn">Copy video link</button><button class="small-btn" id="openYoutubeBtn">Open on YouTube ↗</button></div></div>
+      <div class="player-details"><h2 id="playerTitle">Video title</h2><p id="playerMeta">YouTube video</p>
+      <div class="player-actions">
+        <button class="small-btn" id="playPauseBtn">Ⅱ Pause</button>
+        <button class="small-btn" id="skipBackBtn" title="Back 10 seconds">↶ 10s</button>
+        <button class="small-btn" id="skipForwardBtn" title="Forward 10 seconds">10s ↷</button>
+        <select class="tool-select" id="playbackRateSelect" aria-label="Playback speed"><option value="1">Speed · 1×</option><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="1.75">1.75×</option><option value="2">2×</option></select>
+        <button class="small-btn" id="qualityHelpBtn" title="Change quality in YouTube settings">Quality ⚙</button>
+        <button class="small-btn" id="pipBtn" title="Floating player where supported">Floating ▣</button>
+        <button class="small-btn" id="landscapeBtn" title="Fullscreen and landscape">Landscape ⛶</button>
+        <button class="small-btn" id="copyVideoBtn">Copy link</button>
+        <button class="small-btn" id="openYoutubeBtn">YouTube ↗</button>
+      </div>
+      <p class="tool-note">Quality is controlled by YouTube: use the player ⚙ → Quality. VDU cannot force a resolution through YouTube’s official player API.</p>
+    </div>
     </div>
   </div>
 
-  <div class="modal-backdrop" id="settingsModal" role="dialog" aria-modal="true" aria-label="VDU settings">
+  <div class="modal-backdrop" id="settingsModal" role="dialog" aria-modal="true" aria-label="VDU Control Centre">
     <div class="modal form-modal">
-      <div style="display:flex;justify-content:space-between;align-items:center"><h2>VDU · Free mode</h2><button class="close-btn" data-close="settingsModal" aria-label="Close">×</button></div>
-      <p>VDU does not need a paid API, API key, subscription, or backend server. It searches through community-run Invidious public instances and plays videos with the official YouTube embedded player.</p>
-      <div class="location-permission">✓ No API key or billing setup<br>✓ Search and category filters when a public instance is reachable<br>✓ Play and pause with YouTube's official player<br>✓ Saved videos, history, name and location stay in this browser<br><br>Public search instances are maintained by volunteers and can occasionally be offline or block browser requests. When that happens, use the button below to search directly on YouTube. VDU does not control those third-party servers.</div>
-      <p class="help-text">Video playback is provided by YouTube and may be unavailable when a video owner disables embedding.</p>
+      <div style="display:flex;justify-content:space-between;align-items:center"><h2>VDU · Control Centre</h2><button class="close-btn" data-close="settingsModal" aria-label="Close">×</button></div>
+      <p>Free browser tools for this device. Permissions are requested only when you start a feature.</p>
+      <div class="privacy-banner"><strong>Privacy & ads:</strong> VDU does not place ads or run analytics trackers on its own interface. Ads shown inside the official YouTube player are controlled by YouTube and cannot be removed by VDU.</div>
+
+      <div class="tool-section">
+        <h3>📱 Install VDU like an app</h3>
+        <p>Install VDU on your home screen for an app-style window and a cached interface. Searching and video streaming still need internet.</p>
+        <div class="tool-row"><button class="small-btn" id="installAppBtn">Install VDU</button><span class="mini-pill" id="installStatus">Install option depends on browser</span></div>
+        <div class="tool-note">Android Chrome: browser menu ⋮ → Add to Home screen / Install app if the prompt is unavailable.</div>
+      </div>
+
+      <div class="tool-section">
+        <h3>⏱ VDU screen-time tracker</h3>
+        <p>Counts time while this VDU page is visible on this device. It is not Android’s total screen-time report.</p>
+        <div class="tool-row"><span class="tool-value" id="screenTimeValue">0m 00s today</span><button class="small-btn" id="resetScreenTimeBtn">Reset today</button></div>
+      </div>
+
+      <div class="tool-section">
+        <h3>🌐 Internet connection</h3>
+        <p id="connectionInfo">Checking browser network information…</p>
+        <div class="tool-row"><button class="small-btn" id="runSpeedTestBtn">Run full speed test ↗</button><span class="mini-pill">Opens Cloudflare speed test</span></div>
+        <div class="tool-note">The browser estimate is not a measured speed test. Use the button for download, upload and latency measurements.</div>
+      </div>
+
+      <div class="tool-section">
+        <h3>📍 Live location · this device only</h3>
+        <p>Starts live location updates after browser permission. Exact coordinates are shown in this page and are not saved in VDU. City/country lookup sends coordinates to the reverse-geocoding provider.</p>
+        <div class="tool-row"><button class="small-btn" id="liveLocationBtn">Start live location</button><span class="mini-pill" id="locationStatus">Not tracking</span></div>
+        <div class="tool-status" id="locationCoordinates">Coordinates not available</div>
+        <div class="tool-note">This cannot locate another phone or device. Location updates may pause when Android suspends the browser or the screen is off.</div>
+      </div>
+
+      <div class="tool-section">
+        <h3>🖥 Display & floating window</h3>
+        <p>Use fullscreen/landscape while watching. A floating picture-in-picture window is available only in browsers that support it.</p>
+        <div class="tool-row"><button class="small-btn" id="toolsLandscapeBtn">Fullscreen landscape</button><button class="small-btn" id="toolsPipBtn">Open floating player</button></div>
+      </div>
+
+      <div class="tool-section">
+        <h3>▶ Background playback</h3>
+        <p>VDU exposes media-session controls where supported, but a website cannot force Android or Chrome to keep a YouTube video playing after the screen locks. The browser, battery policy and YouTube player decide this.</p>
+        <div class="tool-note">For reliable screen-off playback, a native Android app with a media foreground service is needed. Installing this website as a PWA does not create that native service.</div>
+      </div>
+
+      <div class="tool-section">
+        <h3>🛡 Ad blocking & skip controls</h3>
+        <p>VDU's own interface is ad-free and does not load advertising scripts. It cannot block or skip ads inside YouTube's cross-origin player. Use the 10-second skip buttons for video content, not adverts.</p>
+      </div>
       <div class="modal-footer"><button class="small-btn" data-close="settingsModal">Close</button><button class="primary-btn" id="officialSearchBtn">Search YouTube ↗</button></div>
     </div>
   </div>
@@ -129,12 +207,20 @@
     (() => {
       'use strict';
       const $ = (selector) => document.querySelector(selector);
+      // Progressive Web App shell: caches the VDU interface for reopening offline.
+      if ('serviceWorker' in navigator && location.protocol === 'https:') {
+        window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+      }
+      let vduInstallPrompt = null;
+      window.addEventListener('beforeinstallprompt', (event) => { event.preventDefault(); vduInstallPrompt = event; const s=$('#installStatus'); if(s)s.textContent='Ready to install'; });
+      window.addEventListener('appinstalled', () => { const s=$('#installStatus'); if(s)s.textContent='VDU installed'; vduInstallPrompt=null; });
+
       const $$ = (selector) => [...document.querySelectorAll(selector)];
       const store = {
         get(key, fallback=''){ try { const value = localStorage.getItem('vdu_' + key); return value === null ? fallback : value; } catch { return fallback; } },
         set(key, value){ try { localStorage.setItem('vdu_' + key, value); } catch { toast('Browser storage is unavailable.'); } }
       };
-      const state = { name: store.get('name','Guest'), location: null, videos: [], nextPage: null, page: 1, lastQuery: '', lastCategory: 'all', player: null, activeVideo: null, saved: JSON.parse(store.get('saved','[]') || '[]'), history: JSON.parse(store.get('history','[]') || '[]'), busy: false, ytReady: null };
+      const state = { name: store.get('name','Guest'), location: null, locationWatchId: null, lastLocationLookup: 0, videos: [], nextPage: null, page: 1, lastQuery: '', lastCategory: 'all', player: null, activeVideo: null, pipWindow: null, saved: JSON.parse(store.get('saved','[]') || '[]'), history: JSON.parse(store.get('history','[]') || '[]'), busy: false, ytReady: null };
       const categories = {
         all: {}, music: {query:'music'}, gaming: {query:'gaming'}, tech: {query:'science technology'},
         education: {query:'educational lecture'}, live: {query:'live', feature:'live'}, shorts: {query:'short videos', duration:'short'}
@@ -172,7 +258,7 @@
         $('#yt-player').innerHTML='';
         ensureYouTubeApi().then(()=>{
           if(!$('#playerModal').classList.contains('open'))return;
-          state.player=new YT.Player('yt-player',{height:'100%',width:'100%',videoId:video.id,playerVars:{autoplay:1,playsinline:1,rel:0,modestbranding:1},events:{onReady:()=>{},onStateChange:(e)=>{if(e.data===YT.PlayerState.PLAYING)$('#playPauseBtn').textContent='Ⅱ Pause';else if(e.data===YT.PlayerState.PAUSED||e.data===YT.PlayerState.ENDED)$('#playPauseBtn').textContent='▶ Play';},onError:(e)=>{toast(e.data===101||e.data===150?'This video owner does not allow playback on external sites.':'This video could not be played.');}}});
+          state.player=new YT.Player('yt-player',{height:'100%',width:'100%',videoId:video.id,playerVars:{autoplay:1,playsinline:1,controls:1,fs:1,rel:0,enablejsapi:1,origin:location.origin},events:{onReady:(e)=>{const frame=e.target.getIframe();frame.setAttribute('allow','autoplay; encrypted-media; picture-in-picture; fullscreen');frame.setAttribute('allowfullscreen','');setMediaSession(video);},onStateChange:(e)=>{if(e.data===YT.PlayerState.PLAYING)$('#playPauseBtn').textContent='Ⅱ Pause';else if(e.data===YT.PlayerState.PAUSED||e.data===YT.PlayerState.ENDED)$('#playPauseBtn').textContent='▶ Play';},onError:(e)=>{toast(e.data===101||e.data===150?'This video owner does not allow playback on external sites.':'This video could not be played.');}}});
         }).catch(e=>toast(e.message));
         const item={id:video.id,title:video.title||'YouTube video',channelTitle:video.channelTitle||'YouTube',thumbnail:video.thumbnail||`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`,duration:video.duration||'',viewCount:video.viewCount||'',publishedAt:video.publishedAt||''};
         state.history=[item,...state.history.filter(x=>x.id!==item.id)].slice(0,60);store.set('history',JSON.stringify(state.history));
@@ -268,17 +354,79 @@
         finally{state.busy=false;}
       }
       function selectCategory(category){$$('.pill').forEach(p=>p.classList.toggle('active',p.dataset.category===category));state.lastCategory=category;const query=$('#searchInput').value.trim()||'popular videos';runSearch(query,{category});}
-      async function setLocation(){
-        if(!navigator.geolocation){toast('Location is not supported by this browser.');return;}
-        $('#locationText').textContent='Requesting permission…';
-        navigator.geolocation.getCurrentPosition(async pos=>{
-          try{
-            const {latitude,longitude}=pos.coords;const url=`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${encodeURIComponent(latitude)}&longitude=${encodeURIComponent(longitude)}&localityLanguage=en`;const res=await fetch(url);if(!res.ok)throw new Error('Could not look up this location.');const data=await res.json();
-            state.location={city:data.city||data.locality||data.principalSubdivision||'',country:data.countryName||'',countryCode:data.countryCode||''};store.set('location',JSON.stringify(state.location));updateLocationDisplay();toast('Location updated.');
-          }catch(e){$('#locationText').textContent='Location lookup unavailable';toast(e.message);}
-        },err=>{$('#locationText').textContent='Location not set';toast(err.code===1?'Location permission was denied.': 'Could not get your location.');},{enableHighAccuracy:false,timeout:12000,maximumAge:300000});
+      async function reverseLookup(latitude,longitude){
+        const now=Date.now(); if(now-state.lastLocationLookup<240000)return;
+        state.lastLocationLookup=now;
+        try{
+          const url=`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${encodeURIComponent(latitude)}&longitude=${encodeURIComponent(longitude)}&localityLanguage=en`;
+          const res=await fetch(url,{cache:'no-store'});if(!res.ok)throw new Error('Reverse lookup unavailable');const data=await res.json();
+          state.location={city:data.city||data.locality||data.principalSubdivision||'',country:data.countryName||'',countryCode:data.countryCode||''};
+          store.set('location',JSON.stringify(state.location));updateLocationDisplay();
+        }catch{ $('#locationText').textContent='Live coordinates available'; }
       }
+      function toggleLiveLocation(){
+        if(state.locationWatchId!==null){navigator.geolocation.clearWatch(state.locationWatchId);state.locationWatchId=null;$('#liveLocationBtn').textContent='Start live location';$('#locationStatus').textContent='Tracking stopped';$('#locationCoordinates').textContent='Coordinates hidden';updateLocationDisplay();toast('Live location stopped.');return;}
+        if(!navigator.geolocation){toast('Location is not supported by this browser.');return;}
+        $('#locationStatus').textContent='Requesting permission…';$('#locationCoordinates').textContent='Waiting for device location…';
+        state.locationWatchId=navigator.geolocation.watchPosition(async pos=>{
+          const {latitude,longitude,accuracy}=pos.coords;
+          $('#locationStatus').textContent='Live · accuracy ±'+Math.round(accuracy)+' m';
+          $('#locationCoordinates').textContent=`Lat ${latitude.toFixed(5)} · Lon ${longitude.toFixed(5)} · Updated ${new Date(pos.timestamp).toLocaleTimeString()}`;
+          $('#locationText').textContent='Live location active';
+          await reverseLookup(latitude,longitude);
+        },err=>{
+          state.locationWatchId=null;$('#liveLocationBtn').textContent='Start live location';$('#locationStatus').textContent='Unavailable';
+          const message=err.code===1?'Location permission denied.':err.code===2?'Device location unavailable.':'Location request timed out.';
+          $('#locationCoordinates').textContent=message;toast(message);
+        },{enableHighAccuracy:true,timeout:20000,maximumAge:15000});
+        $('#liveLocationBtn').textContent='Stop live location';$('#locationStatus').textContent='Starting…';toast('Live location requested.');
+      }
+      async function setLocation(){ toggleLiveLocation(); }
       function updateLocationDisplay(){const loc=state.location;if(loc){const label=[loc.city,loc.country].filter(Boolean).join(', ')||'Location set';$('#locationText').textContent=label;$('#locationText').title=label;}else{$('#locationText').textContent='Location not set';}}
+      // Session-only screen time: visible-tab use for this VDU page, saved locally per calendar day.
+      const dayKey=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);};
+      let screenDay=dayKey(),screenSeconds=Math.max(0,Number(store.get('screenTime_'+screenDay,'0'))||0),screenStarted=document.visibilityState==='visible'?Date.now():null;
+      function fmtScreenTime(total){const s=Math.max(0,Math.floor(total));const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),r=s%60;return h?`${h}h ${m}m`:m?`${m}m ${r}s`:`${r}s`;}
+      function updateScreenTime(){if(dayKey()!==screenDay){screenDay=dayKey();screenSeconds=0;store.set('screenTime_'+screenDay,'0');screenStarted=document.visibilityState==='visible'?Date.now():null;}const live=screenStarted&&document.visibilityState==='visible'?(Date.now()-screenStarted)/1000:0;const el=$('#screenTimeValue');if(el)el.textContent=fmtScreenTime(screenSeconds+live)+' today';}
+      function commitScreenTime(){if(screenStarted){screenSeconds+=(Date.now()-screenStarted)/1000;screenStarted=null;store.set('screenTime_'+screenDay,String(Math.floor(screenSeconds)));}updateScreenTime();}
+      document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')commitScreenTime();else if(!screenStarted)screenStarted=Date.now();});
+      window.addEventListener('pagehide',commitScreenTime);setInterval(updateScreenTime,1000);updateScreenTime();
+
+      function updateConnectionInfo(){const c=navigator.connection||navigator.mozConnection||navigator.webkitConnection;const el=$('#connectionInfo');if(!el)return;if(!c){el.textContent='Your browser does not expose connection estimates. Run a full speed test below.';return;}const parts=[];if(c.type)parts.push('Type: '+c.type);if(c.effectiveType)parts.push('Network: '+c.effectiveType.toUpperCase());if(Number.isFinite(c.downlink))parts.push('Estimated downlink: '+c.downlink+' Mbps');if(Number.isFinite(c.rtt))parts.push('Estimated latency: '+c.rtt+' ms');if(c.saveData)parts.push('Data saver: on');el.textContent=parts.join(' · ')||'Connection details are not available.';}
+      updateConnectionInfo();(navigator.connection||navigator.mozConnection||navigator.webkitConnection)?.addEventListener?.('change',updateConnectionInfo);
+
+      async function requestLandscape(){
+        const target=$('#playerModal').classList.contains('open')?$('#playerModal .modal'):document.documentElement;
+        try{if(!document.fullscreenElement&&target?.requestFullscreen)await target.requestFullscreen();
+          if(screen.orientation?.lock)await screen.orientation.lock('landscape');
+          else toast('Auto-rotate is controlled by Android. Enable Auto-rotate and rotate your phone.');
+        }catch{toast('Landscape lock is unavailable in this browser. Enable Android Auto-rotate and use fullscreen.');}
+      }
+      document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement){try{screen.orientation?.unlock?.();}catch{}}});
+      function setMediaSession(video){
+        if(!('mediaSession' in navigator))return;
+        try{navigator.mediaSession.metadata=new MediaMetadata({title:video.title||'VDU video',artist:video.channelTitle||'YouTube',album:'VDU'});
+          navigator.mediaSession.setActionHandler('play',()=>state.player?.playVideo?.());
+          navigator.mediaSession.setActionHandler('pause',()=>state.player?.pauseVideo?.());
+          navigator.mediaSession.setActionHandler('seekbackward',d=>{const now=state.player?.getCurrentTime?.()||0;state.player?.seekTo?.(Math.max(0,now-(d.seekOffset||10)),true);});
+          navigator.mediaSession.setActionHandler('seekforward',d=>{const now=state.player?.getCurrentTime?.()||0;state.player?.seekTo?.(now+(d.seekOffset||10),true);});
+        }catch{}
+      }
+      async function openFloatingPlayer(){
+        if(!state.activeVideo){toast('Play a video first.');return;}
+        if(!('documentPictureInPicture' in window)){toast('Floating window is not supported by this browser. Try the YouTube player’s Picture-in-picture option if available.');return;}
+        try{
+          if(state.pipWindow&&!state.pipWindow.closed){state.pipWindow.focus();return;}
+          const pip=await window.documentPictureInPicture.requestWindow({width:420,height:270});state.pipWindow=pip;
+          pip.document.body.style.cssText='margin:0;background:#050608;color:white;font-family:Arial,sans-serif;overflow:hidden';
+          const bar=pip.document.createElement('div');bar.textContent='VDU · Floating player';bar.style.cssText='height:28px;padding:7px 10px;box-sizing:border-box;background:#111923;color:#b6f36b;font-size:12px;font-weight:bold';pip.document.body.appendChild(bar);
+          const frame=pip.document.createElement('iframe');frame.src=`https://www.youtube.com/embed/${encodeURIComponent(state.activeVideo.id)}?autoplay=1&playsinline=1&controls=1&rel=0`;frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';frame.allowFullscreen=true;frame.style.cssText='display:block;width:100%;height:calc(100% - 28px);border:0';pip.document.body.appendChild(frame);
+          pip.addEventListener('pagehide',()=>{if(state.pipWindow===pip)state.pipWindow=null;});
+        }catch{toast('Could not open floating player. Your browser may not support Document Picture-in-Picture.');}
+      }
+      function seekBy(delta){if(!state.player?.getCurrentTime)return;const now=state.player.getCurrentTime();state.player.seekTo(Math.max(0,now+delta),true);}
+      function changeRate(value){const rate=Number(value);if(state.player?.setPlaybackRate){state.player.setPlaybackRate(rate);toast('Requested playback speed '+rate+'×. YouTube may apply only supported rates.');}}
+
       function clickNavigation(action){activateNav(action);switch(action){case'home':state.lastCategory='all';$('#sectionTitle').textContent='A universe to explore';$('#sectionSubtitle').textContent='Search YouTube and make this space yours.';setStatus('');showEmpty('Your next rabbit hole awaits','Search videos above, or paste a YouTube video link to play it directly.','Open YouTube search',()=>openYouTubeSearch($('#searchInput').value.trim()||'trending videos'));break;case'explore':$('#searchInput').value='trending videos';runSearch('trending videos',{category:'all'});break;case'music':$('#searchInput').value='music';selectCategory('music');break;case'gaming':$('#searchInput').value='gaming';selectCategory('gaming');break;case'tech':$('#searchInput').value='science and technology';selectCategory('tech');break;case'live':$('#searchInput').value='live';selectCategory('live');break;case'history':$('#sectionTitle').textContent='Recently played';$('#sectionSubtitle').textContent='Videos you have opened on this device.';renderLocalList(state.history,'Nothing played yet','Open a video and it will appear here.');break;case'saved':$('#sectionTitle').textContent='Saved videos';$('#sectionSubtitle').textContent='Your personal watch-later shelf on this device.';renderLocalList(state.saved,'No saved videos yet','Tap the heart on any video to save it here.');break;}}
       $('#searchForm').addEventListener('submit',e=>{e.preventDefault();const q=$('#searchInput').value;$$('.pill').forEach(p=>p.classList.toggle('active',p.dataset.category==='all'));runSearch(q,{category:'all'});});
       $('#exploreBtn').addEventListener('click',()=>{$('#searchInput').value='trending videos';runSearch('trending videos');});$('#apiSetupBtn').addEventListener('click',()=>showModal('settingsModal'));$('#emptySetupBtn')?.addEventListener('click',()=>openYouTubeSearch($('#searchInput').value.trim()||'trending videos'));$('#settingsBtn').addEventListener('click',()=>showModal('settingsModal'));$('#officialSearchBtn').addEventListener('click',()=>openYouTubeSearch($('#searchInput').value.trim()||'trending videos'));$('#locationBtn').addEventListener('click',setLocation);
@@ -289,9 +437,22 @@
       $('#loadMoreBtn').addEventListener('click',()=>runSearch(state.lastQuery,{append:true,category:state.lastCategory}));
       $('#sortSelect').addEventListener('change',()=>{if(state.lastQuery)runSearch(state.lastQuery,{category:state.lastCategory});});
       $('#playPauseBtn').addEventListener('click',()=>{if(!state.player)return;const status=state.player.getPlayerState?.();if(status===1||status===3){state.player.pauseVideo();$('#playPauseBtn').textContent='▶ Play';}else{state.player.playVideo();$('#playPauseBtn').textContent='Ⅱ Pause';}});
+      $('#skipBackBtn').addEventListener('click',()=>seekBy(-10));$('#skipForwardBtn').addEventListener('click',()=>seekBy(10));
+      $('#playbackRateSelect').addEventListener('change',e=>changeRate(e.target.value));
+      $('#qualityHelpBtn').addEventListener('click',()=>toast('Use the YouTube player ⚙ → Quality. YouTube chooses Auto by default.'));
+      $('#pipBtn').addEventListener('click',openFloatingPlayer);$('#toolsPipBtn').addEventListener('click',openFloatingPlayer);
+      $('#landscapeBtn').addEventListener('click',requestLandscape);$('#toolsLandscapeBtn').addEventListener('click',requestLandscape);
+      $('#liveLocationBtn').addEventListener('click',toggleLiveLocation);
+      $('#resetScreenTimeBtn').addEventListener('click',()=>{screenSeconds=0;screenStarted=document.visibilityState==='visible'?Date.now():null;store.set('screenTime_'+screenDay,'0');updateScreenTime();toast('Today’s VDU screen time reset.');});
+      $('#runSpeedTestBtn').addEventListener('click',()=>window.open('https://speed.cloudflare.com/','_blank','noopener,noreferrer'));
+      $('#installAppBtn').addEventListener('click',async()=>{if(vduInstallPrompt){vduInstallPrompt.prompt();const choice=await vduInstallPrompt.userChoice;$('#installStatus').textContent=choice.outcome==='accepted'?'Install accepted':'Install dismissed';vduInstallPrompt=null;}else{toast('In Chrome: menu ⋮ → Add to Home screen / Install app.');$('#installStatus').textContent='Use Chrome menu → Add to Home screen';}});
+
       $('#playerModal').addEventListener('click',e=>{if(e.target.id==='playerModal')hideModal('playerModal');});$$('[data-close]').forEach(b=>b.addEventListener('click',()=>hideModal(b.dataset.close)));
       document.addEventListener('keydown',e=>{if(e.key==='Escape') $$('.modal-backdrop.open').forEach(m=>hideModal(m.id));if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();$('#searchInput').focus();}});
+      // The search form's submit event means pressing Enter in its search field starts a search.
+      $('#searchInput').setAttribute('enterkeyhint','search');
       setProfile();try{state.location=JSON.parse(store.get('location','null'));}catch{}updateLocationDisplay();loadTrending();
+      window.addEventListener('pagehide',()=>{if(state.locationWatchId!==null)navigator.geolocation?.clearWatch?.(state.locationWatchId);});
     })();
   </script>
 </body>
